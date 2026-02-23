@@ -1,105 +1,150 @@
-Decision Fatigue Guard is a privacy-first Chrome extension that works on Gmail to detect user overload and visually reduce decision stress in real time.
-The extension calculates a Decision Load Score (DLS) based on user interaction patterns and applies UI interventions when cognitive load increases — all on the user’s device, with no backend and no data scraping.
+🧠 Decision Fatigue Guard
 
-Problem Statement
-People make dozens of small decisions while handling emails (open, reply, delete, undo, switch tabs). Over time, this leads to decision fatigue, causing slower responses, mistakes, and stress.
+Decision Fatigue Guard is a privacy-first Chrome extension for Gmail that detects cognitive overload in real time and visually reduces decision stress while it’s happening.
+The extension calculates a Decision Load Score (DLS) based on user interaction patterns and applies adaptive UI interventions — entirely on the user’s device, with no backend, no tracking, and no data scraping.
 
-Most tools focus on productivity after overload happens — this project detects overload while it’s happening.
+🚩 Problem Statement
 
-Solution Overview
+While managing emails, users make dozens of micro-decisions such as opening, replying, deleting, undoing, and switching contexts. Over time, this leads to decision fatigue, resulting in slower responses, errors, and increased stress.
+
+Most productivity tools react after overload occurs.
+Decision Fatigue Guard identifies overload in real time — before productivity drops.
+
+💡 Solution Overview
+
 Decision Fatigue Guard:
 
-Continuously tracks interaction metadata (not email content)
+Continuously tracks interaction metadata (never email content)
 
-Computes a real-time Decision Load Score (0–100)
+Computes a real-time Decision Load Score (DLS: 0–100)
 
-Predicts overload risk using an on-device ML model
+Predicts overload risk using an on-device machine learning model
 
 Dynamically modifies Gmail’s UI to reduce cognitive effort
 
-Key Features
-✅ Real-time DLS (Decision Load Score)
+✨ Key Features
+
+✅ Real-time Decision Load Score (DLS)
 
 🟢🟡🔴 Color-coded states: GREEN / AMBER / RED
 
-On-device Machine Learning (TensorFlow.js)
+🤖 On-device Machine Learning (TensorFlow.js)
 
-Privacy-first (no email content, no network requests)
+🔒 Privacy-first (no network requests, no content access)
 
-UI interventions (guarded actions, simplified UI)
+🎯 UI interventions (guarded actions, simplified UI)
 
-Decision Inbox (“Decide later” support)
+📥 Decision Inbox (“Decide later” support)
 
-Dev Mode for demo and testing
-📊 Decision Load States State DLS Range Meaning GREEN 0–29 Normal workload AMBER 30–60 Rising cognitive load RED 61–100 High overload
+🧪 Developer Mode for demos and testing
 
-An early-warning rule promotes RED state if:
+📊 Decision Load States
+State	DLS Range	Meaning
+🟢 GREEN	0–29	Normal workload
+🟡 AMBER	30–60	Rising cognitive load
+🔴 RED	61–100	High overload
+⚠️ Early Warning Rule
 
-ML Risk > 65% and
+The system promotes RED state when:
+
+ML overload risk > 65%, and
 
 DLS ≥ 45
 
-Machine Learning (On-Device)
+🤖 Machine Learning (On-Device)
+
 Framework: TensorFlow.js
 
 Model: Logistic Regression
 
 Training: Local only (no server)
 
-Inputs: Interaction features (events/min, undo rate, indecision time, context switching)
+Input Features
 
-Output: Overload risk probability (%)
+Events per minute
 
-Users can also give manual feedback using “I feel overloaded” to improve training.
+Undo rate
 
-Privacy by Design
+Indecision time
+
+Context switching frequency
+
+Output
+
+Overload risk probability (%)
+
+Users can also provide manual feedback using “I feel overloaded” to improve model accuracy over time.
+
+🔐 Privacy by Design
+
 This extension does NOT:
 
 Read email subject or body
 
-Store recipients or sender details
+Store sender or recipient details
 
 Send data to any server
 
 Only anonymous interaction metadata is stored locally using chrome.storage.local.
 
-Tech Stack
-Chrome Extension – Manifest V3
+🛠 Tech Stack
+
+Chrome Extension (Manifest V3)
 
 TypeScript
 
-Vite – Build tool
+Vite (Build Tool)
 
-TensorFlow.js – On-device ML
+TensorFlow.js (On-device ML)
 
-MutationObserver – Gmail DOM detection
+MutationObserver (Gmail DOM detection)
 
-CSS Interventions – UI changes
+CSS Interventions (UI adaptation)
 
-Chrome Storage API – Local persistence
+Chrome Storage API (Local persistence)
 
-📁 Project Structure public/ manifest.json icons/
+📁 Project Structure
+public/
+  ├─ manifest.json
+  ├─ icons/
 
-src/ content/ gmailObserver.ts eventCapture.ts uiOverlay.ts interventions.ts styles.css index.ts
-
-background/ service_worker.ts model.ts storage.ts
-
-shared/ dls.ts featureEngineering.ts types.ts
+src/
+  ├─ content/
+  │   ├─ gmailObserver.ts
+  │   ├─ eventCapture.ts
+  │   ├─ uiOverlay.ts
+  │   ├─ interventions.ts
+  │   └─ styles.css
+  │
+  ├─ background/
+  │   ├─ service_worker.ts
+  │   ├─ model.ts
+  │   └─ storage.ts
+  │
+  ├─ shared/
+  │   ├─ dls.ts
+  │   ├─ featureEngineering.ts
+  │   └─ types.ts
+  │
+  └─ index.ts
 
 tests/
 
-Installation & Setup
+tests/
+🚀 Installation & Setup
 Prerequisites
 
 Node.js 18+
 
 Google Chrome
 
-Steps npm install npm run build
+Steps
+npm install
+npm run build
 
 Open chrome://extensions
 
-Enable Developer mode
+Enable Developer Mode
 
 Click Load unpacked
 
@@ -107,28 +152,40 @@ Select the dist/ folder
 
 Open Gmail → Extension activates automatically
 
-🧪 Demo Tips (Hackathon)
+🧪 Demo Tips (Hackathons)
 
-Enable Dev Mode in the panel
+Enable Dev Mode in the extension panel
 
-Use Simulate overload to quickly show AMBER → RED
+Use Simulate Overload to quickly trigger AMBER → RED
 
-Show how Gmail UI changes in real time
+Demonstrate real-time Gmail UI changes
 
-Explain privacy + on-device ML clearly
+Highlight privacy-first + on-device ML clearly
 
-Limitations (MVP)
+⚠️ Limitations (MVP)
+
 Gmail DOM may change occasionally
 
-Model accuracy improves with more usage
+Model accuracy improves with continued usage
 
-Interventions are intentionally non-destructive
+UI interventions are intentionally non-destructive
 
-Future Enhancements
-Personal DLS baselines per user
+🔮 Future Enhancements
 
-Calendar + task integration
+Personalized DLS baselines per user
+
+Calendar and task integration
 
 Long-term fatigue analytics
 
 Cross-app support (Docs, Slack, Outlook)
+
+⭐ Why This Project Stands Out
+
+Real-time cognitive load detection
+
+On-device ML with zero data leakage
+
+Privacy-first by design
+
+Practical UX interventions, not just analytics
